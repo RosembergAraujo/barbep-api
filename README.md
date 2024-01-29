@@ -1,4 +1,4 @@
-# barbep-api
+# Barbep-api
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 

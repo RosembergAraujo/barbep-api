@@ -1,4 +1,4 @@
-package com.barbep
+package com.barbep.resources
 
 import com.barbep.dtos.CreateUserInputDto
 import jakarta.validation.Valid
@@ -14,7 +14,6 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody
 class GreetingResource {
 
     @POST
-//    @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RequestBody(

@@ -17,7 +17,7 @@ class BarberShop : PanacheEntity() {
     // val owner: User? = null
     @field:JsonIgnore
     @ManyToMany(mappedBy = "barbershops")
-    var users: MutableList<User>? = mutableListOf<User>()
+    var users: MutableList<User>? = mutableListOf()
 
     companion object : PanacheCompanion<BarberShop>
 }

@@ -1,5 +1,7 @@
 package com.barbep.resources
 
+import com.barbep.auth.Auth
+import com.barbep.dtos.AuthUserPayloadDto
 import com.barbep.dtos.CreateUserInputDto
 import com.barbep.models.BarberShop
 import com.barbep.models.User
@@ -22,36 +24,37 @@ class UserResource {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestBody(
-            content =
-                    [
-                            Content(
-                                    mediaType = "application/json",
-                                    schema = Schema(implementation = CreateUserInputDto::class),
-                                    examples =
-                                            [
-                                                    ExampleObject(
-                                                            name = "example1",
-                                                            value =
-                                                                    """
-                                                                    {
-																		"name": "John",
-																		"email": "john@example.com",
-																		"password": "123",
-																		"phone": "1234567890"
-																	}
-																	"""
-                                                    ),
-                                                    ExampleObject(
-                                                            name = "example2",
-                                                            value = """
-                                                                    {
-																		"name": "John",
-                                                                    	"email": "john@example.com",
-                                                                        "phone": "123-456-7890"
-																	}
-																	"""
-                                                    )]
-                            )]
+        content =
+        [
+            Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = CreateUserInputDto::class),
+                examples =
+                [
+                    ExampleObject(
+                        name = "example1",
+                        value =
+                        """
+                        {
+                            "name": "John",
+                            "email": "john@example.com",
+                            "password": "123",
+                            "phone": "1234567890"
+                        }
+                        """
+                    ),
+                    ExampleObject(
+                        name = "example2",
+                        value =
+                        """
+                        {
+                            "name": "John",
+                            "email": "john@example.com",
+                            "phone": "123-456-7890"
+                        }
+                        """
+                    )]
+            )]
     )
     fun createUser(@Valid dto: CreateUserInputDto): Response {
         val newUser = User()
@@ -72,7 +75,11 @@ class UserResource {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     fun getAllUsers(): Response {
+        val token = Auth.generateToken(AuthUserPayloadDto(1, "John"))
         val users = User.listAll()
-        return Response.ok(users).build()
+        return Response.ok(object {
+            val token = token
+            val users = users
+        }).build()
     }
 }

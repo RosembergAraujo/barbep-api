@@ -12,7 +12,9 @@ import jakarta.persistence.Table
 @Table(name = "barber_shop_tb")
 class BarberShop : PanacheEntity() {
 
-    @Column var name: String? = null
+    @Column
+    var name: String? = null
+
     // @OneToOne
     // val owner: User? = null
     @field:JsonIgnore
